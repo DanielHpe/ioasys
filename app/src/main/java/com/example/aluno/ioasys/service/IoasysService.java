@@ -48,7 +48,7 @@ public class IoasysService {
         Call<Usuario> loginUsuario(@Body Usuario usuario);
 
         @GET("enterprises/")
-        Call<EmpresasLista> getEmpresas(@Header("access-token") String token,
+        Call<Object> getEmpresas(@Header("access-token") String token,
                                         @Header("client") String client,
                                         @Header("uid") String uid);
 

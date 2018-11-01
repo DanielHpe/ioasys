@@ -1,6 +1,7 @@
 package com.example.aluno.ioasys;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.example.aluno.ioasys.dao.UsuarioDAO;
 import com.example.aluno.ioasys.entity.Usuario;
 import com.example.aluno.ioasys.service.IoasysService;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.Headers;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -26,6 +28,7 @@ public class LoginActivity extends Activity {
     private Button buttonLogin;
     private String email;
     private String senha;
+    private SweetAlertDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +53,31 @@ public class LoginActivity extends Activity {
 
     public void logar(){
 
-        IoasysService service = new IoasysService();
-
         email = textLogin.getText().toString().trim();
         senha = textSenha.getText().toString().trim();
 
-        Usuario usuario = new Usuario(email, senha);
+        if(email.equalsIgnoreCase("")){
+            textLogin.setError("Campo Obrigatório");
+            textLogin.requestFocus();
+        } else if(senha.equalsIgnoreCase("")){
+            textSenha.setError("Campo Obrigatório");
+            textSenha.requestFocus();
+        } else {
+            logarUsuario();
+        }
 
+    }
+
+    private void logarUsuario() {
+
+        progress = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        progress.setTitleText("Logando...");
+        progress.setCancelable(false);
+        progress.show();
+        buttonLogin.setEnabled(false);
+
+        IoasysService service = new IoasysService();
+        Usuario usuario = new Usuario(email, senha);
         service.getAPI().loginUsuario(usuario).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
@@ -64,6 +85,9 @@ public class LoginActivity extends Activity {
                     getHeadersFromResponse(response.headers());
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    buttonLogin.setEnabled(true);
+                    textLogin.setText("");
+                    textSenha.setText("");
                 } else {
                     erroLogin();
                 }
@@ -74,7 +98,6 @@ public class LoginActivity extends Activity {
                 erroLogin();
             }
         });
-
     }
 
     private void getHeadersFromResponse(Headers headers) {
@@ -94,5 +117,21 @@ public class LoginActivity extends Activity {
 
     public void erroLogin(){
 
+        Dialog dialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Erro ao logar!")
+                .setContentText("Usuário ou senha incorretos!")
+                .setConfirmText("OK");
+
+        progress.dismissWithAnimation();
+        dialog.show();
+        buttonLogin.setEnabled(true);
+        textSenha.setText("");
+
+    }
+
+    @Override
+    protected void onRestart() {
+        progress.dismiss();
+        super.onRestart();
     }
 }

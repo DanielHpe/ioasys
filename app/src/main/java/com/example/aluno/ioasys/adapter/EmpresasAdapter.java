@@ -12,22 +12,27 @@ import com.example.aluno.ioasys.entity.Empresas;
 import com.example.aluno.ioasys.service.IoasysService;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class EmpresasAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private TextView nomeEmpresa;
-    private TextView descricaoEmpresa;
+    private TextView tipoEmpresa;
     private TextView paisEmpresa;
     private ImageView imageEmpresa;
     private Context context;
     private List<Empresas> empresas;
+    private ArrayList<Empresas> listEmpresas;
 
     public EmpresasAdapter(Context context, List<Empresas> empresas){
         this.context = context;
         this.empresas = empresas;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.listEmpresas = new ArrayList<>();
+        this.listEmpresas.addAll(empresas);
     }
 
 
@@ -54,16 +59,36 @@ public class EmpresasAdapter extends BaseAdapter {
 
         imageEmpresa = itemView.findViewById(R.id.imageEmpresa);
         nomeEmpresa = itemView.findViewById(R.id.nomeEmpresa);
-        descricaoEmpresa = itemView.findViewById(R.id.tipoEmpresa);
+        tipoEmpresa = itemView.findViewById(R.id.tipoEmpresa);
         paisEmpresa = itemView.findViewById(R.id.paisEmpresa);
 
-        nomeEmpresa.setText("Empresa " + (i+1));
-        descricaoEmpresa.setText(empresas.get(i).description.substring(1, 15) + "...");
-        paisEmpresa.setText(empresas.get(i).country);
+        nomeEmpresa.setText(empresas.get(i).getEnterprise_name());
+        tipoEmpresa.setText(empresas.get(i).getEnterprise_type());
+        paisEmpresa.setText(empresas.get(i).getCountry() + " - "
+                                + empresas.get(i).getCity());
 
-        String url = IoasysService.BASE_URL + empresas.get(i).photo;
+        String url = IoasysService.BASE_URL + empresas.get(i).getPhoto();
         Picasso.with(context).load(url).fit().into(imageEmpresa);
 
         return itemView;
+    }
+
+    public void filtro(String charSequence){
+
+        charSequence = charSequence.toLowerCase(Locale.getDefault());
+        empresas.clear();
+
+        if (charSequence.length() == 0){
+            empresas.addAll(listEmpresas);
+        } else {
+            for(Empresas empresa : listEmpresas){
+                if(empresa.getEnterprise_name().toLowerCase(Locale.getDefault())
+                        .contains(charSequence)){
+                    empresas.add(empresa);
+                }
+            }
+        }
+        notifyDataSetChanged();
+
     }
 }
