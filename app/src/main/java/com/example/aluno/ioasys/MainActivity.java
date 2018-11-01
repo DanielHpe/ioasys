@@ -1,13 +1,20 @@
 package com.example.aluno.ioasys;
 
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.aluno.ioasys.adapter.EmpresasAdapter;
@@ -30,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private EmpresasAdapter adapter;
     private SweetAlertDialog progress;
+    private Toolbar toolbar;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.listView);
+
+        toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        imageView = toolbar.findViewById(R.id.logoXmarks);
 
         progress = new SweetAlertDialog( MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         progress.setTitleText("Carregando empresas...");
@@ -93,6 +107,22 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) myActionMenuItem.getActionView();
+        searchView.setQueryHint("Pesquisar...")
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageView.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                imageView.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

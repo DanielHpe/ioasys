@@ -8,8 +8,28 @@
     android:background="@color/beige"
     tools:context=".MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:background="@color/medium_punk"
+        app:titleTextColor="@color/white"
+        android:elevation="4dp"
+        app:title=""
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/logoXmarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_nav" />
+
+    </android.support.v7.widget.Toolbar>
+
     <ListView
         android:id="@+id/listView"
+        android:layout_below="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </ListView>
