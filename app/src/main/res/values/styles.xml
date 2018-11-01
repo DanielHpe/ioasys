@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SearchTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="LoginButton" parent="Theme.AppCompat.Light">
         <item name="android:layout_marginTop">40dp</item>
         <item name="android:layout_marginLeft">30dp</item>

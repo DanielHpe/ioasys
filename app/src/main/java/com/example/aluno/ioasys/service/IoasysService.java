@@ -20,10 +20,10 @@ import retrofit2.http.*;
 
 public class IoasysService {
 
-    public static String baseURL = "http://empresas.ioasys.com.br/";
+    public static final String BASE_URL = "http://empresas.ioasys.com.br";
     public static String API_BASE_URL = "http://empresas.ioasys.com.br/api/v1/";
 
-    public SyncpriceAPI getAPI(){
+    public IoasysApi getAPI(){
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
@@ -39,15 +39,15 @@ public class IoasysService {
                 .client(client.build())
                 .build();
 
-        return retrofit.create(SyncpriceAPI.class);
+        return retrofit.create(IoasysApi.class);
     }
 
-    public interface SyncpriceAPI {
+    public interface IoasysApi {
 
         @POST("users/auth/sign_in")
         Call<Usuario> loginUsuario(@Body Usuario usuario);
 
-        @GET("enterprises")
+        @GET("enterprises/")
         Call<EmpresasLista> getEmpresas(@Header("access-token") String token,
                                         @Header("client") String client,
                                         @Header("uid") String uid);

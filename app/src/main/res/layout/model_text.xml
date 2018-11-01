@@ -2,40 +2,58 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_height="wrap_content"
+    android:background="@color/beige">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageEmpresa"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="5dp"
-        android:background=""/>
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp" />
 
     <TextView
-        android:id="@+id/txtDescricaoProduto"
+        android:id="@+id/nomeEmpresa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="20dp"
-        android:paddingTop="15dp"
-        android:fontFamily="sans-serif-condensed"
-        android:textAllCaps="true"
+        android:textSize="20dp"
         android:text="TextView"
         android:textStyle="bold"
-        android:textSize="16dp"
-        android:textColor="#000" />
+        android:fontFamily="sans-serif"
+        android:textColor="@color/charcoal_grey"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/imageEmpresa"
+        android:layout_marginLeft="10dp"/>
 
     <TextView
-        android:id="@+id/txtStatusProduto"
+        android:id="@+id/tipoEmpresa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txtDescricaoProduto"
-        android:layout_below="@+id/txtDescricaoProduto"
-        android:fontFamily="sans-serif-condensed"
-        android:paddingBottom="15dp"
+        android:layout_toRightOf="@+id/imageEmpresa"
+        android:layout_below="@+id/nomeEmpresa"
+        android:textColor="@color/black"
         android:text="TextView"
-        android:textSize="16dp" />
+        android:textSize="18dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginLeft="10dp"/>
 
-
+    <TextView
+        android:id="@+id/paisEmpresa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imageEmpresa"
+        android:layout_below="@+id/tipoEmpresa"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="TextView"
+        android:textSize="16dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginLeft="10dp"/>
 
 </RelativeLayout>

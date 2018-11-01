@@ -1,9 +1,13 @@
 package com.example.aluno.ioasys;
 
+import android.app.Activity;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 
+import com.example.aluno.ioasys.adapter.EmpresasAdapter;
 import com.example.aluno.ioasys.config.SharedPref;
 import com.example.aluno.ioasys.entity.Empresas;
 import com.example.aluno.ioasys.entity.EmpresasLista;
@@ -15,14 +19,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private IoasysService service;
+    private ListView listView;
+    private EmpresasAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listView = findViewById(R.id.listView);
 
         service = new IoasysService();
         SharedPref.init(MainActivity.this);
@@ -41,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<EmpresasLista> call, Response<EmpresasLista> response) {
                 if(response.isSuccessful()){
                     EmpresasLista empresasLista = response.body();
-                    int a = 1;
+                    List<Empresas> listEmpresas = empresasLista.getEnterprises();
+                    adapter = new EmpresasAdapter(getApplicationContext(), listEmpresas);
+                    listView.setAdapter(adapter);
                 }
             }
 
@@ -50,6 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
+
 }
