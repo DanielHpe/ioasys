@@ -3,6 +3,7 @@ package com.example.aluno.ioasys;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private SweetAlertDialog progress;
     private Toolbar toolbar;
     private ImageView imageView;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +83,27 @@ public class MainActivity extends AppCompatActivity {
                 adapter = new EmpresasAdapter(getApplicationContext(), listEmpresas);
                 listView.setAdapter(adapter);
                 progress.dismissWithAnimation();
+                onItemDetalhe(listEmpresas);
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 erroCarregarEmpresas();
+            }
+        });
+
+    }
+
+    private void onItemDetalhe(final List<Empresas> listEmpresas) {
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, DetalheActivity.class);
+                intent.putExtra("nomeEmpresa", listEmpresas.get(position).getEnterprise_name());
+                intent.putExtra("descricao", listEmpresas.get(position).getDescription());
+                intent.putExtra("imageLink", listEmpresas.get(position).getPhoto());
+                startActivity(intent);
             }
         });
 
@@ -106,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
-        searchView.setQueryHint("Pesquisar...")
+        searchView = (SearchView) myActionMenuItem.getActionView();
+        searchView.setQueryHint("Pesquisar...");
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -146,4 +165,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        searchView.onActionViewCollapsed();
+        if(imageView.getVisibility() == View.INVISIBLE){
+            imageView.setVisibility(View.VISIBLE);
+        }
+        super.onRestart();
+    }
 }

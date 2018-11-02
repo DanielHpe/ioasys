@@ -39,8 +39,8 @@ public class LoginActivity extends Activity {
         textSenha = findViewById(R.id.txtSenha);
         buttonLogin = findViewById(R.id.btnLogin);
 
-        textLogin.setText("testeapple@ioasys.com.br");
-        textSenha.setText("12341234");
+//        textLogin.setText("testeapple@ioasys.com.br");
+//        textSenha.setText("12341234");
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +86,6 @@ public class LoginActivity extends Activity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     buttonLogin.setEnabled(true);
-                    textLogin.setText("");
-                    textSenha.setText("");
                 } else {
                     erroLogin();
                 }
@@ -131,6 +129,8 @@ public class LoginActivity extends Activity {
 
     @Override
     protected void onRestart() {
+        textLogin.setText("");
+        textSenha.setText("");
         progress.dismiss();
         super.onRestart();
     }

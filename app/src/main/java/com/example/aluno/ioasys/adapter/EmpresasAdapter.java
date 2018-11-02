@@ -67,7 +67,15 @@ public class EmpresasAdapter extends BaseAdapter {
         paisEmpresa.setText(empresas.get(i).getCountry() + " - "
                                 + empresas.get(i).getCity());
 
-        String url = IoasysService.BASE_URL + empresas.get(i).getPhoto();
+        String url = "";
+
+        if(empresas.get(i).getPhoto() == null
+                || empresas.get(i).getPhoto().equalsIgnoreCase("null")){
+            url = context.getResources().getString(R.string.linkNoIMage);
+        } else {
+            url = IoasysService.BASE_URL + empresas.get(i).getPhoto();
+        }
+
         Picasso.with(context).load(url).fit().into(imageEmpresa);
 
         return itemView;

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/beige"
+    tools:context="com.example.aluno.ioasys.DetalheActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        app:titleTextColor="@color/white"
+        android:background="@color/colorAccent"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/Theme.AppCompat.Light"
+        android:elevation="4dp"
+        app:title=""
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/imageDetalheEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_margin="30dp" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/imageDetalheEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textDescricaoEmpresa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:textSize="16dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:paddingBottom="20dp"
+            android:textColor="@color/charcoal_grey"
+            android:text=""/>
+
+    </ScrollView>
+
+
+</RelativeLayout>
