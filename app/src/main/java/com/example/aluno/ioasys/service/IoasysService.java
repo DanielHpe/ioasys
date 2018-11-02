@@ -1,18 +1,12 @@
 package com.example.aluno.ioasys.service;
 
-import android.content.Context;
-
-import com.example.aluno.ioasys.entity.Empresas;
-import com.example.aluno.ioasys.entity.EmpresasLista;
 import com.example.aluno.ioasys.entity.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

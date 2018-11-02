@@ -64,10 +64,9 @@ public class EmpresasAdapter extends BaseAdapter {
 
         nomeEmpresa.setText(empresas.get(i).getEnterprise_name());
         tipoEmpresa.setText(empresas.get(i).getEnterprise_type());
-        paisEmpresa.setText(empresas.get(i).getCountry() + " - "
-                                + empresas.get(i).getCity());
+        paisEmpresa.setText(empresas.get(i).getCountry());
 
-        String url = "";
+        String url;
 
         if(empresas.get(i).getPhoto() == null
                 || empresas.get(i).getPhoto().equalsIgnoreCase("null")){

@@ -41,25 +41,46 @@
         android:textStyle="normal"
         android:text="Lorem ipsum dolor sit amet, contetur adipiscing elit. Nunc accumsan."/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textIntro"
+        android:layout_marginTop="84dp"
+        android:layout_marginLeft="45dp"
+        android:background="@drawable/ic_email" />
+
     <EditText
         android:id="@+id/txtLogin"
         android:layout_below="@id/textIntro"
-        android:layout_width="300dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:ems="10"
+        android:paddingLeft="30dp"
         android:hint="E-mail"
         android:inputType="textEmailAddress" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textIntro"
+        android:layout_marginTop="148dp"
+        android:layout_marginLeft="45dp"
+        android:background="@drawable/ic_cadeado" />
 
     <EditText
         android:id="@+id/txtSenha"
         android:layout_below="@id/txtLogin"
-        android:layout_width="300dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:paddingLeft="30dp"
+        android:text=""
         android:hint="Senha"
         android:inputType="textPassword" />
 

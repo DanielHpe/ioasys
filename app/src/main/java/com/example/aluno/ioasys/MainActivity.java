@@ -1,12 +1,7 @@
 package com.example.aluno.ioasys;
 
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -20,11 +15,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.aluno.ioasys.adapter.EmpresasAdapter;
+import com.example.aluno.ioasys.config.Conexao;
 import com.example.aluno.ioasys.config.SharedPref;
 import com.example.aluno.ioasys.dao.EmpresasDAO;
 import com.example.aluno.ioasys.entity.Empresas;
 import com.example.aluno.ioasys.service.IoasysService;
 import com.google.gson.Gson;
+import com.marcoscg.dialogsheet.DialogSheet;
 
 import java.util.List;
 
@@ -62,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
         service = new IoasysService();
         SharedPref.init(MainActivity.this);
-        getDataFromServer();
+
+        if(Conexao.verificaConexao(getApplicationContext())){
+            getDataFromServer();
+        } else {
+            erroCarregarEmpresas("Confira a conexão com a internet!");
+        }
 
     }
 
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                erroCarregarEmpresas();
+                erroCarregarEmpresas("Confira a conexão com a internet!");
             }
         });
 
@@ -109,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void erroCarregarEmpresas() {
+    private void erroCarregarEmpresas(String mensagem) {
 
         Dialog dialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Erro ao carregar empresas!")
-                .setContentText("Confira a conexão com a internet!")
+                .setContentText(mensagem)
                 .setConfirmText("OK");
 
         progress.dismissWithAnimation();
@@ -170,7 +172,26 @@ public class MainActivity extends AppCompatActivity {
         if (!searchView.isIconified()) {
             searchView.setIconified(true);
         } else {
-            super.onBackPressed();
+            final DialogSheet dialogSheet = new DialogSheet(MainActivity.this);
+            dialogSheet.setCancelable(false)
+                    .setTitle("Aviso")
+                    .setMessage("Deseja sair do aplicativo?")
+                    .setCancelable(false)
+                    .setPositiveButton("Sim", new DialogSheet.OnPositiveClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("Não", new DialogSheet.OnNegativeClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialogSheet.dismiss();
+                        }
+                    })
+                    .setBackgroundColor(getResources().getColor(R.color.white))
+                    .show();
+
         }
     }
 

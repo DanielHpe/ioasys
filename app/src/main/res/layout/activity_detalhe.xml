@@ -13,6 +13,7 @@
         android:background="@color/colorAccent"
         android:theme="@style/AppTheme"
         app:popupTheme="@style/Theme.AppCompat.Light"
+        app:navigationIcon="@drawable/ic_arrow_back"
         android:elevation="4dp"
         app:title=""
         android:layout_width="match_parent"
@@ -31,19 +32,20 @@
         android:id="@+id/scrollView"
         android:layout_below="@+id/imageDetalheEmpresa"
         android:layout_width="match_parent"
+        android:layout_marginBottom="30dp"
         android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textDescricaoEmpresa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:textSize="16dp"
+            android:fontFamily="@font/ssp_regular"
+            android:textSize="20dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="20dp"
             android:paddingBottom="20dp"
-            android:textColor="@color/charcoal_grey"
+            android:textColor="@color/light_grey"
             android:text=""/>
 
     </ScrollView>

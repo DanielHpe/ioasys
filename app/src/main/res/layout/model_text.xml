@@ -21,12 +21,12 @@
         android:id="@+id/nomeEmpresa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:text="TextView"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
         android:textColor="@color/charcoal_grey"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/imageEmpresa"
         android:layout_marginLeft="10dp"/>
 
@@ -39,7 +39,7 @@
         android:textColor="@color/black"
         android:textStyle="italic"
         android:text="TextView"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:fontFamily="sans-serif"
         android:layout_marginLeft="10dp"/>
 
@@ -52,7 +52,7 @@
         android:textColor="@color/black"
         android:layout_marginBottom="10dp"
         android:text="TextView"
-        android:textSize="16dp"
+        android:textSize="14dp"
         android:fontFamily="sans-serif"
         android:layout_marginLeft="10dp"/>
 

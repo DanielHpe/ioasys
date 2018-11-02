@@ -8,18 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.aluno.ioasys.config.Conexao;
 import com.example.aluno.ioasys.config.SharedPref;
-import com.example.aluno.ioasys.dao.UsuarioDAO;
 import com.example.aluno.ioasys.entity.Usuario;
 import com.example.aluno.ioasys.service.IoasysService;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.Headers;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Header;
 
 public class LoginActivity extends Activity {
 
@@ -39,16 +37,12 @@ public class LoginActivity extends Activity {
         textSenha = findViewById(R.id.txtSenha);
         buttonLogin = findViewById(R.id.btnLogin);
 
-//        textLogin.setText("testeapple@ioasys.com.br");
-//        textSenha.setText("12341234");
-
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logar();
             }
         });
-
     }
 
     public void logar(){
@@ -63,9 +57,12 @@ public class LoginActivity extends Activity {
             textSenha.setError("Campo Obrigatório");
             textSenha.requestFocus();
         } else {
-            logarUsuario();
+            if(Conexao.verificaConexao(getApplicationContext())){
+                logarUsuario();
+            } else {
+                erroLogin("Falha na Conexão!");
+            }
         }
-
     }
 
     private void logarUsuario() {
@@ -86,14 +83,20 @@ public class LoginActivity extends Activity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     buttonLogin.setEnabled(true);
+                    textLogin.setText("");
+                    textSenha.setText("");
                 } else {
-                    erroLogin();
+                    progress.dismissWithAnimation();
+                    erroLogin("Usuário ou senha incorretos!");
+                    textSenha.setText("");
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                erroLogin();
+                progress.dismissWithAnimation();
+                erroLogin("Usuário ou senha incorretos!");
+                textSenha.setText("");
             }
         });
     }
@@ -113,25 +116,26 @@ public class LoginActivity extends Activity {
     }
 
 
-    public void erroLogin(){
+    public void erroLogin(String mensagem){
 
         Dialog dialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Erro ao logar!")
-                .setContentText("Usuário ou senha incorretos!")
+                .setContentText(mensagem)
                 .setConfirmText("OK");
 
-        progress.dismissWithAnimation();
         dialog.show();
         buttonLogin.setEnabled(true);
-        textSenha.setText("");
 
     }
 
     @Override
     protected void onRestart() {
-        textLogin.setText("");
-        textSenha.setText("");
-        progress.dismiss();
+        textLogin.setError(null);
+        textSenha.setError(null);
+        textLogin.requestFocus();
+        if(progress != null){
+            progress.dismiss();
+        }
         super.onRestart();
     }
 }

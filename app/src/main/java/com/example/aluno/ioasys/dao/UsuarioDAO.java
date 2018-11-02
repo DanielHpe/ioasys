@@ -12,23 +12,23 @@ public class UsuarioDAO {
         this.context = context;
     }
 
-    public String convertUsuarioToJson(String email, String senha){
-        String result;
-        try{
-
-            JSONStringer jsonStringer = new JSONStringer().array();
-            jsonStringer.object().key("email").value(email)
-                        .key("senha").value(senha).endObject();
-            jsonStringer.endArray();
-            Log.i("JSONSTRING", jsonStringer.toString());
-
-            result = jsonStringer.toString();
-
-        } catch(Exception e) {
-            e.printStackTrace();
-            result = null;
-        }
-
-        return result;
-    }
+//    public String convertUsuarioToJson(String email, String senha){
+//        String result;
+//        try{
+//
+//            JSONStringer jsonStringer = new JSONStringer().array();
+//            jsonStringer.object().key("email").value(email)
+//                        .key("senha").value(senha).endObject();
+//            jsonStringer.endArray();
+//            Log.i("JSONSTRING", jsonStringer.toString());
+//
+//            result = jsonStringer.toString();
+//
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//            result = null;
+//        }
+//
+//        return result;
+//    }
 }
